@@ -1,0 +1,58 @@
+<nav aria-label="Page navigation example">
+
+    <ul class="pagination">
+
+        {% if page_obj.has_prev %}
+        <li class="page-item">
+
+            <a class="page-link text-dark" href="{{ request.path }}?page={{ page_obj.prev_num }}"
+               aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+
+        </li>
+
+        <li class="page-item">
+
+            <a class="page-link text-dark" href="{{ request.path }}?page={{ page_obj.prev_num }}">
+                {{ page_obj.prev_num}}
+            </a>
+
+
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link text-dark" href="" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+
+        <li class="page-item active"><a class="page-link text-dark" href="#">{{ page_obj.page }}</a></li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+
+            <a class="page-link text-dark" href="{{ request.path }}?page={{ page_obj.next_num }}">
+                {{ page_obj.next_num}}
+            </a>
+
+        </li>
+        <li class="page-item">
+
+            <a class="page-link text-dark" href="{{ request.path }}?page={{ page_obj.next_num }}"
+               aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link text-dark" href="" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+
+    </ul>
+</nav>

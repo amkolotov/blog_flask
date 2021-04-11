@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Вход
+{% endblock %}
+
+{% block content %}
+
+<div class="container login">
+
+    {% from "security/_macros.html" import render_field_with_errors, render_field %}
+    {% include "security/_messages.html" %}
+    <h1 class="text-center mb-3">Войти</h1>
+    <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+        {{ login_user_form.hidden_tag() }}
+        {{ render_field_with_errors(login_user_form.email, class="form-control", placeholder="email") }}
+        {{ render_field_with_errors(login_user_form.password, class="form-control", placeholder="password") }}
+        {{ render_field_with_errors(login_user_form.remember, class="form-control") }}
+        {{ render_field(login_user_form.next) }}
+        <input type="submit" class="form-control mt-5 btn btn-secondary" value="Войти">
+    </form>
+
+
+    <button class="form-control mt-5 btn btn-light text-white">
+        <a href="{{ url_for_security('register') }}">Зарегистрироваться</a>
+    </button>
+
+</div>
+
+{% endblock %}

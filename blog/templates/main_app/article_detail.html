@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ article.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-8">
+
+
+            <div class="article">
+
+                <a href="{{ url_for('main_app.author_articles', author_id=article.author_id) }}">
+                    <div class="author my-3">
+                        автор: {{ article.author.username }} | опубликовано: {{ article.pub_date.strftime('%d.%m.%Y') }}
+                    </div>
+                </a>
+
+                <div class="title mb-3">
+                    <h3>{{ article.title }}</h3>
+                </div>
+
+                <div class="tags d-flex mb-3">
+                    {% for tag in article.tags %}
+                    <a href="{{ url_for('main_app.tag_articles', tag_id=tag.id) }}">{{ tag.name }},&ensp;</a>
+                    {% endfor %}
+                </div>
+
+                <div class="poster mb-4">
+                    <img src="{{ url_for('static', filename='images') }}/{{ article.poster }}" alt="poster">
+                </div>
+
+                <p align="justify">{{ article.short_desc }}</p>
+                <p align="justify">{{ article.text }}</p>
+
+            </div>
+
+            {% include 'includes/inc_reviews.html' %}
+
+        </div>
+
+        <div class="col-4">
+            <div class="sticky-top mb-4">
+                {% include 'includes/inc_sidebar.html' %}
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
+{% endblock %}
+
