@@ -1,0 +1,14 @@
+<div class="sidebar mx-auto">
+    <div class="sidebar-header py-3 px-3">ЧИТАЮТ СЕЙЧАС</div>
+    {% for article in reading %}
+    <a href="{{ url_for('main_app.article_detail', article_id=article.id) }}">
+        <div class="sidebar-item px-3">
+            <div class="br py-3">
+                {{ article.title }}
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+
+
+</div>

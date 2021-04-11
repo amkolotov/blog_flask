@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if tag %}
+{{ tag.name }}
+{% elif category %}
+{{ category.name }}
+{% elif author %}
+{{ author.username }}
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-8">
+
+            <div class="row align-items-center page-header">
+                {% if tag %}
+                <div class="col">Тeг: {{ tag.name }}</div>
+                {% elif category %}
+                <div class="col">Категория: {{ category.name }}</div>
+                {% elif author %}
+                <div class="col">Автор: {{ author.username }}</div>
+                {% endif %}
+            </div>
+
+
+            {% for article in page_obj.items %}
+
+            <div class="article">
+                <a href="{{ url_for('main_app.author_articles', author_id=article.author_id) }}">
+                    <div class="author my-3">
+                        автор: {{ article.author.username }} | опубликовано: {{ article.pub_date.strftime('%d.%m.%Y') }}
+                    </div>
+                </a>
+
+                <a href="{{ url_for('main_app.article_detail', article_id=article.id) }}">
+                    <div class="title mb-3">
+                        <h3>{{ article.title }}</h3>
+                    </div>
+                </a>
+
+                <div class="tags d-flex mb-3">
+                    {% for tag in article.tags %}
+                    <a href="{{ url_for('main_app.tag_articles', tag_id=tag.id) }}">{{ tag.name }},&ensp;</a>
+                    {% endfor %}
+                </div>
+
+                <div class="poster mb-4">
+                    <img src="{{ url_for('static', filename='images') }}/{{ article.poster }}" alt="poster">
+                </div>
+
+                <p align="justify">{{ article.short_desc }}</p>
+
+            </div>
+
+            {% endfor %}
+
+            <div class="row justify-content-center my-4">
+                {% include 'includes/inc_pagination.html' %}
+            </div>
+
+        </div>
+
+        <div class="col-4">
+            <div class="sticky-top mb-4">
+                {% include 'includes/inc_sidebar.html' %}
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

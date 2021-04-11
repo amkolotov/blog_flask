@@ -1,0 +1,81 @@
+
+<hr>
+
+<div class="container review">
+    <div class="row">
+        <h3 class="pl-3">Оставить отзыв о товаре:</h3>
+    </div>
+
+    <form action="{{ url_for('main_app.add_review', article_id=article.id) }}" method="post" id="formReview">
+        {{form.hidden_tag()}}
+        <input type="hidden" name="parent" id="parentComment" value="">
+        {{ form.text(class="form-control", id="comment") }}
+        <div class="row justify-content-md-center">
+            <input type="submit" class="form-control btn btn-secondary mt-4" value="Отправить">
+        </div>
+    </form>
+</div>
+
+<hr>
+
+<div class="container review mb-4">
+    <div class="row">
+        <h3 class="pl-3">Читать отзывы:</h3>
+    </div>
+
+    {% for review in article.get_parent_reviews() %}
+    <hr>
+    <div class="row">
+        <div class="col-2 avatar">
+            {% if review.user.profile %}
+            <img src="{{ url_for('static', filename='images') }}/{{ review.user.profile.avatar }}"
+                 alt="{{ review.user.username }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/avatars/default_avatar.jpg') }}"
+                 alt="{{ review.user.username }}">
+            {% endif %}
+        </div>
+        <div class="col-8">
+            <h5>{{ review.user.username }}</h5>
+            <p>{{ review.text }}</p>
+            <a href="#formReview" onclick="addReview('{{ review.user.username }}', {{ review.id }})">
+                Ответить
+            </a>
+        </div>
+    </div>
+
+    {% for rev in review.children %}
+    <div class="row ml-5 mt-3">
+        <div class="col-2 avatar">
+            {% if rev.user.profile %}
+            <img src="{{ url_for('static', filename='images') }}/{{ rev.user.profile.avatar }}"
+                 alt="{{ rev.user.username }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/avatars/default_avatar.jpg') }}"
+                 alt="{{ rev.user.username }}">
+            {% endif %}
+
+        </div>
+        <div class="col-8">
+            <h5>{{ rev.user.username }}</h5>
+            <p>{{ rev.text }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    {% else %}
+    <div class="row justify-content-center my-5">
+        <h5>Ваш отзыв может быть первым</h5>
+    </div>
+
+    {% endfor %}
+
+</div>
+<script>
+    function addReview(name, id) {
+        document.getElementById('parentComment').value = id;
+        document.getElementById('comment').innerText = `${name}, `;
+    }
+
+</script>

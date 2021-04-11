@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Написание статьи
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="my-3 text-center">Написание статьи</h1>
+    <form method="post" action="{{ url_for('account_app.create_article') }}" class="mb-5" enctype=multipart/form-data>
+        {{form.hidden_tag()}}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        <div class="form-group">
+            {{ field.label(class="control-label") }}
+            {{ field(class="form-control") }}
+            {% if field.errors %}
+            <ul class=errors>
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Сохранить" class="form-control mt-5 btn btn-secondary">
+
+    </form>
+</div>
+
+{% endblock %}

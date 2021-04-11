@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
+    {% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="all">
+    {% endblock %}
+
+
+    <title>
+        {% block title %}
+        {% endblock %} | blog
+    </title>
+</head>
+<body>
+
+{% block navbar %}
+<div class="container-fluid fixed-top p-0">
+
+    <div class="container-fluid menu">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-8 m-auto d-flex justify-content-between">
+                    <div class="col-8 mx-0">
+                        <a class="p-2 text-dark" href="{{ url_for('main_app.index') }}">Все категории</a>
+                        {% for category in categories %}
+                        <a class="p-2 text-dark" href="{{ url_for('main_app.article_list', category_id=category.id) }}">
+                            {{ category.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    <div class="col-4 search">
+
+                        <form action="{{ url_for('main_app.search') }}" class="form-inline">
+                            <img src="{{ url_for('static', filename='images/search.svg') }}" alt="search">
+                            <input type="text" name="search">
+                        </form>
+                    </div>
+
+                </div>
+                <div class="col-4 m-auto text-center">
+                    {% if current_user.is_authenticated %}
+                    <a class="p-2 text-dark" href="{{ url_for('auth_app.profile') }}">{{ current_user.username }}</a>
+                    <a href="{{ url_for('auth_app.profile') }}">
+                        {% if current_user.profile %}
+                        <img class="ava" src="{{ url_for('static', filename='images') }}/{{ current_user.profile.avatar }}"
+                             alt="avatar">
+                        {% else %}
+                        <img class="anonim-ava" src="{{ url_for('static', filename='images/frame-ava.svg') }}" alt="ava">
+                        {% endif %}
+                    </a>
+                    <a class="p-2 text-dark" href="{{ url_for('security.logout') }}">Выйти</a>
+                    <a class="p-2 text-dark" href="{{ url_for('account_app.my_articles') }}">Статьи</a>
+                    {% else %}
+                    <a class="p-2 text-dark" href="{{ url_for('security.login') }}">Войти</a>
+                    <img class="anonim-ava" src="{{ url_for('static', filename='images/frame-ava.svg') }}" alt="ava">
+                    {% endif %}
+
+                    {% if current_user.has_role('admin') %}
+                    <a class="p-2 text-dark" href="{{ url_for('admin.index') }}">Админка</a>
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+{% block footer %}
+<footer class="footer">
+    <div class="div contact">
+        <div class="container table">
+            <div class="col-8">
+                <div class="row mb-2">
+                    <div class="col-3 title">
+                        <div class="footer-br">
+                            <span>Ваш аккаунт</span>
+                        </div>
+                    </div>
+
+                    <div class="col-3 title">
+                        <div class="footer-br">
+                            <span>Категории</span>
+                        </div>
+                    </div>
+                    <div class="col-3 title">
+                        <div class="footer-br">
+                            <span>Информация</span>
+                        </div>
+                    </div>
+                    <div class="col-3 title">
+                        <div class="footer-br">
+                            <span>Услуги</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <a href="{{ url_for('auth_app.profile') }}"><p>Профиль</p></a>
+                        <a href="{{ url_for('security.login') }}"><p>Вход</p></a>
+                        <a href="{{ url_for('security.register') }}"><p>Регистрация</p></a>
+                    </div>
+                    <div class="col-3">
+                        {% for category in categories %}
+                        <a href="{{ url_for('main_app.article_list', category_id=category.id) }}">
+                            <p>{{ category.name }}</p>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    <div class="col-3">
+                        <a href="#"><p>Для авторов</p></a>
+                        <a href="#"><p>Для компаний</p></a>
+                        <a href="#"><p>Документы</p></a>
+                        <a href="#"><p>Соглашение</p></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="#"><p>Реклама</p></a>
+                        <a href="#"><p>Тарифы</p></a>
+                        <a href="#"><p>Контент</p></a>
+                        <a href="#"><p>Семинары</p></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="basement">
+        <div class="container">
+            <div class="years d-flex justify-content-between">
+                <p><b>© 2021 ООО “Блог”.</b> Копирование запрещено</p>
+                <p>Политика конфиденциальности</p>
+
+            </div>
+        </div>
+    </div>
+
+
+</footer>
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>
