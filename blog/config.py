@@ -8,7 +8,7 @@ class Configuration(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'aoajsbjmdkclahdkdkdl'
 
-    DEBUG = True
+    DEBUG = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'blog.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
