@@ -4,11 +4,11 @@ from flask import Blueprint, render_template, url_for, request
 from flask_login import current_user, login_required
 from werkzeug.utils import redirect
 
-from app import app, db
-from auth_app.models import User
-from config import PAGINATE_BY
-from main_app.forms import ReviewForm
-from main_app.models import Article, Category, Tag, articles_tags, Review
+from ..app import app, db
+from ..auth_app.models import User
+from ..config import PAGINATE_BY
+from ..main_app.forms import ReviewForm
+from ..main_app.models import Article, Category, Tag, articles_tags, Review
 
 main_app = Blueprint('main_app', __name__, template_folder='templates')
 

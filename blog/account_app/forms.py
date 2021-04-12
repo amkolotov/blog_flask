@@ -4,8 +4,8 @@ from wtforms import SelectField, StringField, FileField, BooleanField, SelectMul
     TextAreaField
 from wtforms.validators import DataRequired
 
-from app import images
-from main_app.models import Category, Tag
+from ..app import images
+from ..main_app.models import Category, Tag
 
 
 class ArticleForm(FlaskForm):

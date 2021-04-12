@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app import db, app
+from ..app import db, app
 
 articles_tags = db.Table('articles_tags',
                          db.Column('article_id', db.Integer, db.ForeignKey('article.id')),

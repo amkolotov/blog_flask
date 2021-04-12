@@ -2,9 +2,9 @@ from flask import Blueprint, request, url_for, render_template
 from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 
-from app import images, db
-from auth_app.forms import UserProfileForm
-from auth_app.models import UserProfile
+from ..app import images, db
+from .forms import UserProfileForm
+from ..auth_app.models import UserProfile
 
 auth_app = Blueprint('auth_app', __name__, template_folder='templates')
 

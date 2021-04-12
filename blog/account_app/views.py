@@ -2,9 +2,9 @@ from flask import Blueprint, request, url_for, render_template
 from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 
-from app import images, db
-from account_app.forms import ArticleForm, ArticleEditForm
-from main_app.models import Category, Article, Tag
+from ..app import images, db
+from .forms import ArticleForm, ArticleEditForm
+from ..main_app.models import Category, Article, Tag
 
 account_app = Blueprint('account_app', __name__, template_folder='templates')
 

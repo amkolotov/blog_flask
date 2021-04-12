@@ -3,8 +3,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, TextAreaField, DateTimeField, FileField
 from wtforms.validators import Optional
 
-from app import images
-
 
 class ExtendedRegisterForm(RegisterForm):
     """Расширение формы регистрации пользователя"""
